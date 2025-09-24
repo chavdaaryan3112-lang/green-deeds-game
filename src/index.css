@@ -40,8 +40,8 @@ All colors MUST be HSL.
     --success: 72 187 120;
     --success-foreground: 255 255 255;
 
-    /* Warning - Warm Orange */
-    --warning: 251 146 60;
+    /* Warning - Muted Earth */
+    --warning: 180 83 9;
     --warning-foreground: 255 255 255;
 
     --destructive: 239 68 68;
@@ -104,8 +104,8 @@ All colors MUST be HSL.
     --success: 34 197 94;
     --success-foreground: 255 255 255;
 
-    --warning: 251 146 60;
-    --warning-foreground: 15 23 42;
+    --warning: 180 83 9;
+    --warning-foreground: 255 255 255;
 
     --destructive: 248 113 113;
     --destructive-foreground: 248 250 252;
