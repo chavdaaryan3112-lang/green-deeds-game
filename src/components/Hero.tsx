@@ -4,7 +4,7 @@ import heroImage from "@/assets/hero-eco.jpg";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Background with Gradient Overlay */}
       <div className="absolute inset-0 gradient-hero">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/5" />
