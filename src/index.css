@@ -1,183 +1,257 @@
+/* ==============================================
+   EcoChallenge - Professional CSS Architecture
+   Environmental Sustainability Platform
+   ============================================== */
+
+/* ==============================================
+   TAILWIND CSS DIRECTIVES
+   ============================================== */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* ==============================================
+   CSS CUSTOM PROPERTIES (DESIGN TOKENS)
+   ============================================== */
 
 @layer base {
   :root {
-    /* Eco-friendly Color Palette */
-    --background: 248 250 252;
-    --foreground: 15 23 42;
+    /* ==========================================
+       BRAND COLORS - Environmental Theme
+       ========================================== */
 
-    --card: 255 255 255;
-    --card-foreground: 15 23 42;
+    /* Primary Brand Colors */
+    --color-primary: 34 139 34;        /* Forest Green - Main brand color */
+    --color-primary-light: 76 175 80;  /* Light Forest Green */
+    --color-primary-dark: 22 101 52;   /* Dark Forest Green */
+    --color-primary-foreground: 255 255 255;
 
-    --popover: 255 255 255;
-    --popover-foreground: 15 23 42;
+    /* Secondary Colors */
+    --color-secondary: 245 245 244;    /* Warm Gray */
+    --color-secondary-foreground: 87 83 78;
 
-    /* Primary - Nature Green */
-    --primary: 34 197 94;
-    --primary-foreground: 255 255 255;
-    --primary-light: 74 222 128;
-    --primary-dark: 22 163 74;
+    /* Neutral Colors */
+    --color-muted: 248 250 252;
+    --color-muted-foreground: 100 116 139;
 
-    /* Secondary - Earth Tones */
-    --secondary: 245 245 244;
-    --secondary-foreground: 87 83 78;
+    /* Accent Colors - Earth Tones */
+    --color-accent: 101 67 33;         /* Earth Brown */
+    --color-accent-light: 139 101 63;  /* Light Earth Brown */
+    --color-accent-dark: 69 39 19;     /* Dark Earth Brown */
+    --color-accent-foreground: 255 255 255;
 
-    /* Muted - Soft Grays */
-    --muted: 248 250 252;
-    --muted-foreground: 100 116 139;
+    /* Status Colors */
+    --color-success: 34 197 94;        /* Success Green */
+    --color-success-foreground: 255 255 255;
+    --color-warning: 202 138 4;        /* Golden Earth */
+    --color-warning-foreground: 255 255 255;
+    --color-destructive: 239 68 68;    /* Error Red */
+    --color-destructive-foreground: 255 255 255;
 
-    /* Accent - Light Purple */
-    --accent: 196 181 253;
-    --accent-foreground: 88 28 135;
+    /* UI Element Colors */
+    --color-background: 248 250 252;
+    --color-foreground: 15 23 42;
+    --color-card: 255 255 255;
+    --color-card-foreground: 15 23 42;
+    --color-popover: 255 255 255;
+    --color-popover-foreground: 15 23 42;
+    --color-border: 226 232 240;
+    --color-input: 226 232 240;
+    --color-ring: 34 197 94;
 
-    /* Success - Fresh Green */
-    --success: 72 187 120;
-    --success-foreground: 255 255 255;
-
-    /* Warning - Light Green */
-    --warning: 134 239 172;
-    --warning-foreground: 22 101 52;
-
-    --destructive: 239 68 68;
-    --destructive-foreground: 255 255 255;
-
-    --border: 226 232 240;
-    --input: 226 232 240;
-    --ring: 34 197 94;
-
+    /* ==========================================
+       LAYOUT & SPACING
+       ========================================== */
     --radius: 0.75rem;
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
 
-    /* Eco Gradients */
-    --gradient-eco: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
-    --gradient-earth: linear-gradient(135deg, hsl(var(--primary-light)), hsl(var(--primary-dark)));
-    --gradient-hero: linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--accent) / 0.05));
+    /* ==========================================
+       TYPOGRAPHY SCALE
+       ========================================== */
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    --font-size-4xl: 2.25rem;
+    --font-size-5xl: 3rem;
 
-    /* Shadows */
-    --shadow-eco: 0 10px 25px -3px hsl(var(--primary) / 0.1);
-    --shadow-card: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
-    --shadow-glow: 0 0 30px hsl(var(--primary) / 0.3);
+    /* ==========================================
+       GRADIENTS - Environmental Inspired
+       ========================================== */
+    --gradient-forest: linear-gradient(135deg,
+      hsl(var(--color-primary)),
+      hsl(var(--color-primary-light))
+    );
+    --gradient-earth: linear-gradient(135deg,
+      hsl(var(--color-accent)),
+      hsl(var(--color-accent-light))
+    );
+    --gradient-hero: linear-gradient(135deg,
+      hsl(var(--color-primary) / 0.15),
+      hsl(var(--color-accent) / 0.1),
+      hsl(var(--color-success) / 0.05)
+    );
+    --gradient-card: linear-gradient(145deg,
+      hsl(var(--color-card) / 0.9),
+      hsl(var(--color-card) / 0.7)
+    );
 
-    /* Animations */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-spring: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    /* ==========================================
+       SHADOWS - Subtle & Professional
+       ========================================== */
+    --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
+    --shadow-xl: 0 20px 25px -5px hsl(0 0% 0% / 0.1), 0 8px 10px -6px hsl(0 0% 0% / 0.1);
+    --shadow-glow: 0 0 20px hsl(var(--color-primary) / 0.15);
+    --shadow-inner: inset 0 2px 4px 0 hsl(0 0% 0% / 0.05);
 
-    --sidebar-background: 255 255 255;
-    --sidebar-foreground: 100 116 139;
-    --sidebar-primary: 34 197 94;
-    --sidebar-primary-foreground: 255 255 255;
-    --sidebar-accent: 248 250 252;
-    --sidebar-accent-foreground: 87 83 78;
-    --sidebar-border: 226 232 240;
-    --sidebar-ring: 34 197 94;
+    /* ==========================================
+       ANIMATIONS - Smooth & Natural
+       ========================================== */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* ==========================================
+       Z-INDEX SCALE
+       ========================================== */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+    --z-toast: 1080;
   }
 
+  /* Dark Mode Support */
   .dark {
-    --background: 15 23 42;
-    --foreground: 248 250 252;
-
-    --card: 30 41 59;
-    --card-foreground: 248 250 252;
-
-    --popover: 30 41 59;
-    --popover-foreground: 248 250 252;
-
-    --primary: 74 222 128;
-    --primary-foreground: 15 23 42;
-    --primary-light: 34 197 94;
-    --primary-dark: 22 163 74;
-
-    --secondary: 51 65 85;
-    --secondary-foreground: 226 232 240;
-
-    --muted: 51 65 85;
-    --muted-foreground: 148 163 184;
-
-    --accent: 196 181 253;
-    --accent-foreground: 88 28 135;
-
-    --success: 34 197 94;
-    --success-foreground: 255 255 255;
-
-    --warning: 134 239 172;
-    --warning-foreground: 22 101 52;
-
-    --destructive: 248 113 113;
-    --destructive-foreground: 248 250 252;
-
-    --border: 51 65 85;
-    --input: 51 65 85;
-    --ring: 74 222 128;
-
-    --gradient-eco: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
-    --gradient-earth: linear-gradient(135deg, hsl(var(--primary-light)), hsl(var(--primary-dark)));
-    --gradient-hero: linear-gradient(135deg, hsl(var(--primary) / 0.2), hsl(var(--accent) / 0.1));
-
-    --shadow-eco: 0 10px 25px -3px hsl(var(--primary) / 0.2);
-    --shadow-card: 0 4px 6px -1px hsl(0 0% 0% / 0.3), 0 2px 4px -2px hsl(0 0% 0% / 0.3);
-    --shadow-glow: 0 0 30px hsl(var(--primary) / 0.4);
-
-    --sidebar-background: 30 41 59;
-    --sidebar-foreground: 148 163 184;
-    --sidebar-primary: 74 222 128;
-    --sidebar-primary-foreground: 15 23 42;
-    --sidebar-accent: 51 65 85;
-    --sidebar-accent-foreground: 226 232 240;
-    --sidebar-border: 51 65 85;
-    --sidebar-ring: 74 222 128;
+    --color-background: 15 23 42;
+    --color-foreground: 248 250 252;
+    --color-card: 30 41 59;
+    --color-card-foreground: 248 250 252;
+    --color-popover: 30 41 59;
+    --color-popover-foreground: 248 250 252;
+    --color-border: 51 65 85;
+    --color-input: 51 65 85;
+    --color-ring: 76 175 80;
+    --color-muted: 51 65 85;
+    --color-muted-foreground: 148 163 184;
+    --color-secondary: 51 65 85;
+    --color-secondary-foreground: 226 232 240;
+    --color-accent: 139 101 63;
+    --color-accent-foreground: 255 255 255;
+    --color-warning: 202 138 4;
+    --color-warning-foreground: 15 23 42;
+    --color-destructive: 248 113 113;
+    --color-destructive-foreground: 248 250 252;
   }
 }
+
+/* ==============================================
+   BASE STYLES
+   ============================================== */
 
 @layer base {
   * {
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Focus Management */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
+  }
+
+  /* Selection Styles */
+  ::selection {
+    @apply bg-primary/20 text-foreground;
+  }
+
+  /* Scrollbar Styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary/60;
   }
 }
 
+/* ==============================================
+   UTILITY CLASSES
+   ============================================== */
+
 @layer utilities {
+  /* Text Utilities */
   .text-balance {
     text-wrap: balance;
   }
-  
-  .gradient-eco {
-    background: var(--gradient-eco);
+
+  .text-pretty {
+    text-wrap: pretty;
   }
-  
-  .gradient-earth {
+
+  /* Gradient Backgrounds */
+  .bg-forest-gradient {
+    background: var(--gradient-forest);
+  }
+
+  .bg-earth-gradient {
     background: var(--gradient-earth);
   }
-  
-  .gradient-hero {
+
+  .bg-hero-gradient {
     background: var(--gradient-hero);
   }
-  
-  .shadow-eco {
-    box-shadow: var(--shadow-eco);
-  }
-  
-  .shadow-card {
-    box-shadow: var(--shadow-card);
-  }
-  
+
+  /* Shadow Utilities */
   .shadow-glow {
     box-shadow: var(--shadow-glow);
   }
-  
-  .transition-smooth {
-    transition: var(--transition-smooth);
+
+  .shadow-professional {
+    box-shadow: var(--shadow-md);
   }
-  
-  .transition-spring {
-    transition: var(--transition-spring);
+
+  /* Animation Utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
   }
 
   .animate-float {
@@ -185,25 +259,193 @@ All colors MUST be HSL.
   }
 
   .animate-glow {
-    animation: glow 2s ease-in-out infinite alternate;
+    animation: glow 3s ease-in-out infinite alternate;
   }
 
   .animate-bounce-subtle {
-    animation: bounce-subtle 2s infinite;
+    animation: bounceSubtle 2s infinite;
+  }
+
+  /* Interactive States */
+  .hover-lift {
+    @apply transition-transform duration-300 hover:scale-[1.02];
+  }
+
+  .hover-glow {
+    @apply transition-all duration-300 hover:shadow-glow;
+  }
+
+  /* Loading States */
+  .loading-shimmer {
+    background: linear-gradient(90deg,
+      hsl(var(--color-muted)) 25%,
+      hsl(var(--color-muted) / 0.5) 50%,
+      hsl(var(--color-muted)) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
   }
 }
 
+/* ==============================================
+   COMPONENT STYLES
+   ============================================== */
+
 @layer components {
+  /* ==========================================
+     CARD COMPONENTS
+     ========================================== */
+
   .eco-card {
-    @apply bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl p-6 shadow-card transition-smooth hover:shadow-eco hover:scale-[1.02];
+    @apply bg-card/95 backdrop-blur-sm border border-border/60 rounded-xl p-6;
+    @apply shadow-professional hover-lift;
+    @apply transition-all duration-300;
+    background: var(--gradient-card);
   }
-  
+
+  .eco-card:hover {
+    @apply shadow-lg border-primary/20;
+  }
+
+  /* ==========================================
+     BUTTON COMPONENTS
+     ========================================== */
+
   .eco-button {
-    @apply bg-primary hover:bg-primary-dark text-primary-foreground font-medium px-8 py-3 rounded-xl transition-spring shadow-eco hover:shadow-glow hover:scale-105;
+    @apply relative inline-flex items-center justify-center;
+    @apply bg-primary hover:bg-primary-dark text-primary-foreground;
+    @apply font-medium px-8 py-3 rounded-xl;
+    @apply shadow-professional hover-glow hover-lift;
+    @apply transition-all duration-300;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
   }
-  
+
+  .eco-button::before {
+    content: '';
+    @apply absolute inset-0 rounded-xl bg-white/10 opacity-0 transition-opacity duration-300;
+  }
+
+  .eco-button:hover::before {
+    @apply opacity-100;
+  }
+
   .eco-button-secondary {
-    @apply bg-secondary hover:bg-secondary/80 text-secondary-foreground font-medium px-6 py-2.5 rounded-lg transition-smooth border border-border/50;
+    @apply bg-secondary hover:bg-secondary/80 text-secondary-foreground;
+    @apply font-medium px-6 py-2.5 rounded-lg;
+    @apply border border-border/50 shadow-sm;
+    @apply transition-all duration-300 hover:shadow-md;
+  }
+
+  /* ==========================================
+     SECTION BACKGROUNDS
+     ========================================== */
+
+  /* ==========================================
+     LAYOUT FIXES
+     ========================================== */
+
+  .hero-section {
+    /* Account for fixed navigation bar */
+    padding-top: 6rem; /* 96px to account for 80px nav + 16px spacing */
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Mobile adjustments */
+  @media (max-width: 768px) {
+    .hero-section {
+      padding-top: 5rem; /* 80px for mobile */
+      min-height: calc(100vh - 5rem);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-section {
+      padding-top: 4.5rem; /* 72px for small screens */
+      min-height: calc(100vh - 4.5rem);
+    }
+  }
+
+  .forest-theme {
+    --color-primary: 34 139 34;
+    --color-accent: 101 67 33;
+    --color-success: 76 175 80;
+  }
+
+  .plant-theme {
+    --color-primary: 76 175 80;
+    --color-accent: 34 197 94;
+    --color-success: 22 101 52;
+  }
+
+  .earth-theme {
+    --color-primary: 101 67 33;
+    --color-accent: 202 138 4;
+    --color-success: 34 139 34;
+  }
+
+  /* ==========================================
+     FORM ELEMENTS
+     ========================================== */
+
+  .form-input {
+    @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2;
+    @apply text-sm ring-offset-background file:border-0 file:bg-transparent;
+    @apply file:text-sm file:font-medium placeholder:text-muted-foreground;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .form-label {
+    @apply text-sm font-medium leading-none peer-disabled:cursor-not-allowed;
+    @apply peer-disabled:opacity-70;
+  }
+
+  /* ==========================================
+     NAVIGATION
+     ========================================== */
+
+  .nav-link {
+    @apply relative text-muted-foreground hover:text-primary;
+    @apply transition-colors duration-300 font-medium;
+  }
+
+  .nav-link::after {
+    content: '';
+    @apply absolute -bottom-1 left-0 h-0.5 w-0 bg-primary;
+    @apply transition-all duration-300;
+  }
+
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+}
+
+/* ==============================================
+   KEYFRAME ANIMATIONS
+   ============================================== */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -218,14 +460,14 @@ All colors MUST be HSL.
 
 @keyframes glow {
   from {
-    filter: drop-shadow(0 0 20px hsl(var(--primary) / 0.3));
+    filter: drop-shadow(0 0 15px hsl(var(--color-primary) / 0.2));
   }
   to {
-    filter: drop-shadow(0 0 30px hsl(var(--primary) / 0.6));
+    filter: drop-shadow(0 0 25px hsl(var(--color-primary) / 0.3));
   }
 }
 
-@keyframes bounce-subtle {
+@keyframes bounceSubtle {
   0%, 20%, 50%, 80%, 100% {
     transform: translateY(0);
   }
@@ -234,5 +476,83 @@ All colors MUST be HSL.
   }
   60% {
     transform: translateY(-5px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ==============================================
+   RESPONSIVE DESIGN
+   ============================================== */
+
+@media (max-width: 768px) {
+  .eco-card {
+    @apply p-4;
+  }
+
+  .eco-button {
+    @apply px-6 py-2.5 text-sm;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-section {
+    @apply p-4;
+  }
+
+  .eco-card {
+    @apply p-3;
+  }
+}
+
+/* ==============================================
+   ACCESSIBILITY ENHANCEMENTS
+   ============================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .eco-card {
+    @apply border-2;
+  }
+
+  .eco-button {
+    @apply border-2 border-primary-foreground;
+  }
+}
+
+/* ==============================================
+   PRINT STYLES
+   ============================================== */
+
+@media print {
+  .eco-card {
+    @apply shadow-none border border-gray-400;
+  }
+
+  .eco-button {
+    @apply shadow-none border border-gray-600;
+  }
+
+  .animate-float,
+  .animate-glow,
+  .animate-bounce-subtle {
+    animation: none;
   }
 }
