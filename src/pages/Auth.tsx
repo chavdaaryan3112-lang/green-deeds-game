@@ -162,7 +162,7 @@ const Auth = () => {
           <div className="flex items-center justify-center mb-4">
             <TreePine className="w-10 h-10 text-primary mr-2" />
             <h1 className="text-3xl font-heading font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              EcoChallenge
+              EcoQuest
             </h1>
           </div>
           <p className="text-muted-foreground">Join the sustainability movement</p>

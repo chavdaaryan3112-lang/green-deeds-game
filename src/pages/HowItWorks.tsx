@@ -61,7 +61,7 @@ const HowItWorks = () => {
       <section className="pt-24 pb-16 px-6 bg-gradient-to-br from-primary/10 via-accent/5 to-success/10">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-heading font-bold text-foreground mb-6">
-            How EcoChallenge Works
+            How EcoQuest Works
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
             Transform your daily habits into meaningful environmental impact.

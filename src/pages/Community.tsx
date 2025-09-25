@@ -71,7 +71,7 @@ const Community = () => {
       <section className="pt-24 pb-16 px-6 bg-gradient-to-br from-success/10 via-primary/5 to-accent/10">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-heading font-bold text-foreground mb-6">
-            EcoChallenge Community
+            EcoQuest Community
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Connect with fellow eco-warriors, share your progress, and inspire others to make a difference.

@@ -43,7 +43,6 @@ const About = () => {
     },
     {
       icon: Users,
-      title: "Community First",
       description: "Together, we're stronger. Every individual contributes to our collective success"
     },
     {
@@ -54,18 +53,17 @@ const About = () => {
   ];
 
   const milestones = [
-    { year: "2022", event: "EcoChallenge founded with 100 beta users" },
+    { year: "2022", event: "EcoQuest founded with 100 beta users" },
     { year: "2023", event: "Reached 10,000 active users milestone" },
     { year: "2023", event: "Launched mobile app for iOS and Android" },
     { year: "2024", event: "Partnership with 50+ environmental organizations" },
-    { year: "2024", event: "1 million challenges completed globally" }
+    { year: "2024", event: "1 million EcoQuests completed globally" }
   ];
 
   const impact = [
     { metric: "25,000+", label: "Active Users", icon: Users },
-    { metric: "1.2M", label: "Challenges Completed", icon: Award },
+    { metric: "1.2M", label: "EcoQuests Completed", icon: Award },
     { metric: "50,000", label: "Virtual Trees Planted", icon: TreePine },
-    { metric: "125 tons", label: "CO2 Emissions Saved", icon: Leaf }
   ];
 
   return (
@@ -76,7 +74,7 @@ const About = () => {
       <section className="pt-24 pb-16 px-6 bg-gradient-to-br from-accent/10 via-primary/5 to-success/10">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-heading font-bold text-foreground mb-6">
-            About EcoChallenge
+            About EcoQuest
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
             We're on a mission to make environmental action accessible, engaging, and impactful for everyone.
@@ -95,12 +93,12 @@ const About = () => {
               </h2>
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
                 Climate change is the greatest challenge of our time, but individual actions can create
-                massive collective impact. EcoChallenge bridges the gap between awareness and action,
+                massive collective impact. EcoQuest bridges the gap between awareness and action,
                 making it easy and rewarding for people to adopt sustainable habits.
               </p>
               <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
                 We believe that gamification, community support, and real-time feedback can transform
-                how people think about their environmental footprint. Every challenge completed,
+                how people think about their environmental footprint. Every EcoQuest completed,
                 every tree planted, every habit changed brings us closer to a sustainable planet.
               </p>
               <Button className="eco-button text-lg px-8 py-4">
@@ -216,7 +214,7 @@ const About = () => {
               Get In Touch
             </h2>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Have questions about EcoChallenge? Want to partner with us? We'd love to hear from you!
+              Have questions about EcoQuest? Want to partner with us? We'd love to hear from you!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button className="eco-button text-lg px-8 py-4">

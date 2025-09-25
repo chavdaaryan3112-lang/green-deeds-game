@@ -44,7 +44,7 @@ const Navigation = () => {
               <Leaf className="w-4 h-4 text-success absolute -top-1 -right-1 animate-float" />
             </div>
             <span className="text-2xl font-heading font-bold text-foreground">
-              EcoChallenge
+              EcoQuest
             </span>
           </Link>
 

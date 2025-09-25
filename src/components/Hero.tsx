@@ -37,7 +37,7 @@ const Hero = () => {
           <div className="flex items-center justify-center mb-4">
             <TreePine className="w-12 h-12 text-primary mr-3 animate-glow" />
             <h1 className="text-5xl md:text-7xl font-heading font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              EcoChallenge
+              EcoQuest
             </h1>
           </div>
           <p className="text-2xl md:text-3xl text-muted-foreground font-medium">
