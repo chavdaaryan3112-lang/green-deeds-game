@@ -157,6 +157,7 @@ const HowItWorks = () => {
           </div>
         </div>
       </section>
+    </div>
   );
 };
 

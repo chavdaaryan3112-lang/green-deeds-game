@@ -1,11 +1,14 @@
-import { TreePine, Menu, X, Leaf } from "lucide-react";
+import { TreePine, Menu, X, Leaf, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, signOut, loading } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -13,6 +16,12 @@ const Navigation = () => {
 
   const closeMenu = () => {
     setIsMenuOpen(false);
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/");
+    closeMenu();
   };
 
   const handleLinkClick = (to: string) => {
@@ -103,14 +112,46 @@ const Navigation = () => {
 
           {/* Desktop CTA Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" className="text-muted-foreground hover:text-primary">
-              Login
-            </Button>
-            <Button className="eco-button">
-              <Link to="/challenges" className="flex items-center" onClick={() => handleLinkClick('/challenges')}>
-                Sign Up Free
-              </Link>
-            </Button>
+            {!loading && (
+              <>
+                {user ? (
+                  <>
+                    <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                      <User className="w-4 h-4" />
+                      <span>{user.email}</span>
+                    </div>
+                    <Button 
+                      variant="ghost" 
+                      className="text-muted-foreground hover:text-primary flex items-center gap-2"
+                      onClick={handleSignOut}
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Sign Out
+                    </Button>
+                    <Button className="eco-button">
+                      <Link to="/dashboard" className="flex items-center" onClick={() => handleLinkClick('/dashboard')}>
+                        Dashboard
+                      </Link>
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button 
+                      variant="ghost" 
+                      className="text-muted-foreground hover:text-primary"
+                      onClick={() => navigate("/auth")}
+                    >
+                      Login
+                    </Button>
+                    <Button className="eco-button">
+                      <Link to="/auth" className="flex items-center" onClick={() => handleLinkClick('/auth')}>
+                        Sign Up Free
+                      </Link>
+                    </Button>
+                  </>
+                )}
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -188,14 +229,46 @@ const Navigation = () => {
 
               {/* Mobile CTA Section */}
               <div className="flex flex-col space-y-3 pt-4 border-t border-border/50">
-                <Button variant="ghost" className="text-muted-foreground hover:text-primary justify-start">
-                  Login
-                </Button>
-                <Button className="eco-button justify-start">
-                  <Link to="/challenges" className="flex items-center w-full" onClick={() => handleLinkClick('/challenges')}>
-                    Sign Up Free
-                  </Link>
-                </Button>
+                {!loading && (
+                  <>
+                    {user ? (
+                      <>
+                        <div className="flex items-center space-x-2 text-sm text-muted-foreground px-4 py-2">
+                          <User className="w-4 h-4" />
+                          <span>{user.email}</span>
+                        </div>
+                        <Button 
+                          variant="ghost" 
+                          className="text-muted-foreground hover:text-primary justify-start flex items-center gap-2"
+                          onClick={handleSignOut}
+                        >
+                          <LogOut className="w-4 h-4" />
+                          Sign Out
+                        </Button>
+                        <Button className="eco-button justify-start">
+                          <Link to="/dashboard" className="flex items-center w-full" onClick={() => handleLinkClick('/dashboard')}>
+                            Dashboard
+                          </Link>
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button 
+                          variant="ghost" 
+                          className="text-muted-foreground hover:text-primary justify-start"
+                          onClick={() => navigate("/auth")}
+                        >
+                          Login
+                        </Button>
+                        <Button className="eco-button justify-start">
+                          <Link to="/auth" className="flex items-center w-full" onClick={() => handleLinkClick('/auth')}>
+                            Sign Up Free
+                          </Link>
+                        </Button>
+                      </>
+                    )}
+                  </>
+                )}
               </div>
             </div>
           </div>
