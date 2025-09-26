@@ -11,6 +11,7 @@ import Community from "./pages/Community";
 import About from "./pages/About";
 import Dashboard from "./pages/Dashboard";
 import Challenges from "./pages/Challenges";
+import ChallengesBrowse from "./pages/ChallengesBrowse";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -31,6 +32,7 @@ const App = () => (
               <Route path="/about" element={<About />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/challenges" element={<Challenges />} />
+              <Route path="/challenges/browse" element={<ChallengesBrowse />} />
               <Route path="/auth" element={<Auth />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

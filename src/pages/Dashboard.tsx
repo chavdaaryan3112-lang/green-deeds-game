@@ -4,18 +4,26 @@ import Navigation from "@/components/Navigation";
 import { Trophy, Target, Calendar, TrendingUp, Award, TreePine, Flame, Star, CheckCircle, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
+import { useChallenges } from "@/hooks/useChallenges";
+import { useAchievements } from "@/hooks/useAchievements";
+import { useGameLogic } from "@/hooks/useGameLogic";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { user, loading } = useAuth();
+  const { user, loading: authLoading } = useAuth();
+  const { profile, loading: profileLoading } = useProfile();
+  const { getTodaysChallenges, userChallenges, loading: challengesLoading } = useChallenges();
+  const { getAchievementsWithStatus, loading: achievementsLoading } = useAchievements();
+  const { completeUserChallenge, plantTree } = useGameLogic();
 
   useEffect(() => {
-    if (!loading && !user) {
+    if (!authLoading && !user) {
       navigate("/auth");
     }
-  }, [user, loading, navigate]);
+  }, [user, authLoading, navigate]);
 
-  if (loading) {
+  if (authLoading || profileLoading || challengesLoading || achievementsLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -26,65 +34,21 @@ const Dashboard = () => {
     );
   }
 
-  if (!user) {
+  if (!user || !profile) {
     return null; // Will redirect to auth
   }
-  const userStats = {
-    level: 12,
-    points: 8750,
-    streak: 28,
-    treesPlanted: 67,
-    challengesCompleted: 156,
-    co2Saved: "23.5 kg"
+
+  const todaysChallenges = getTodaysChallenges();
+  const achievementsWithStatus = getAchievementsWithStatus().slice(0, 5);
+  const recentChallenges = userChallenges.filter(uc => uc.is_completed).slice(0, 7);
+
+  const handleCompleteChallenge = async (userChallengeId: string, challenge: any) => {
+    await completeUserChallenge(userChallengeId, challenge.challenge);
   };
 
-  const dailyChallenges = [
-    {
-      id: 1,
-      title: "Reduce Plastic Usage",
-      description: "Use reusable bags instead of plastic",
-      points: 50,
-      time: "15 min",
-      completed: true,
-      category: "Waste Reduction"
-    },
-    {
-      id: 2,
-      title: "Save Energy",
-      description: "Turn off lights when not in use",
-      points: 30,
-      time: "Ongoing",
-      completed: false,
-      category: "Energy"
-    },
-    {
-      id: 3,
-      title: "Walk Instead of Drive",
-      description: "Walk for short trips under 1km",
-      points: 75,
-      time: "20 min",
-      completed: false,
-      category: "Transportation"
-    }
-  ];
-
-  const achievements = [
-    { name: "First Steps", description: "Complete your first challenge", icon: "🎯", unlocked: true },
-    { name: "Week Warrior", description: "Complete challenges for 7 days straight", icon: "🔥", unlocked: true },
-    { name: "Tree Planter", description: "Plant 50 virtual trees", icon: "🌲", unlocked: true },
-    { name: "Eco Master", description: "Reach level 25", icon: "👑", unlocked: false },
-    { name: "Community Leader", description: "Help 10 friends join", icon: "🤝", unlocked: false }
-  ];
-
-  const weeklyProgress = [
-    { day: "Mon", challenges: 3, points: 150 },
-    { day: "Tue", challenges: 5, points: 225 },
-    { day: "Wed", challenges: 2, points: 100 },
-    { day: "Thu", challenges: 4, points: 200 },
-    { day: "Fri", challenges: 6, points: 300 },
-    { day: "Sat", challenges: 3, points: 150 },
-    { day: "Sun", challenges: 4, points: 200 }
-  ];
+  const handlePlantTree = async () => {
+    await plantTree();
+  };
 
   return (
     <div className="min-h-screen">
@@ -96,21 +60,21 @@ const Dashboard = () => {
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div>
               <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-4">
-                Welcome back, Eco-Warrior! 🌱
+                Welcome back, {profile.full_name || 'Eco-Warrior'}! 🌱
               </h1>
               <p className="text-xl text-muted-foreground">
-                Level {userStats.level} • {userStats.points.toLocaleString()} points
+                Level {profile.level} • {profile.total_points.toLocaleString()} points
               </p>
             </div>
             <div className="mt-6 md:mt-0">
               <div className="flex items-center space-x-4">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-accent">{userStats.streak}</div>
+                  <div className="text-2xl font-bold text-accent">{profile.current_streak}</div>
                   <div className="text-sm text-muted-foreground">Day Streak</div>
                 </div>
                 <div className="w-px h-12 bg-border"></div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-success">{userStats.treesPlanted}</div>
+                  <div className="text-2xl font-bold text-success">{profile.trees_planted}</div>
                   <div className="text-sm text-muted-foreground">Trees</div>
                 </div>
               </div>
@@ -125,25 +89,25 @@ const Dashboard = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="eco-card text-center group hover:scale-105 transition-transform duration-300">
               <Target className="w-8 h-8 text-primary mx-auto mb-3" />
-              <div className="text-2xl font-bold text-foreground mb-1">{userStats.challengesCompleted}</div>
+              <div className="text-2xl font-bold text-foreground mb-1">{userChallenges.filter(uc => uc.is_completed).length}</div>
               <div className="text-sm text-muted-foreground">Challenges Done</div>
             </div>
 
             <div className="eco-card text-center group hover:scale-105 transition-transform duration-300">
               <Flame className="w-8 h-8 text-accent mx-auto mb-3" />
-              <div className="text-2xl font-bold text-foreground mb-1">{userStats.streak}</div>
+              <div className="text-2xl font-bold text-foreground mb-1">{profile.current_streak}</div>
               <div className="text-sm text-muted-foreground">Day Streak</div>
             </div>
 
             <div className="eco-card text-center group hover:scale-105 transition-transform duration-300">
               <TreePine className="w-8 h-8 text-success mx-auto mb-3" />
-              <div className="text-2xl font-bold text-foreground mb-1">{userStats.treesPlanted}</div>
+              <div className="text-2xl font-bold text-foreground mb-1">{profile.trees_planted}</div>
               <div className="text-sm text-muted-foreground">Trees Planted</div>
             </div>
 
             <div className="eco-card text-center group hover:scale-105 transition-transform duration-300">
               <TrendingUp className="w-8 h-8 text-primary mx-auto mb-3" />
-              <div className="text-2xl font-bold text-foreground mb-1">{userStats.co2Saved}</div>
+              <div className="text-2xl font-bold text-foreground mb-1">{profile.co2_saved_kg.toFixed(1)}kg</div>
               <div className="text-sm text-muted-foreground">CO2 Saved</div>
             </div>
           </div>
@@ -164,61 +128,82 @@ const Dashboard = () => {
                 </div>
 
                 <div className="space-y-4">
-                  {dailyChallenges.map((challenge) => (
-                    <div key={challenge.id} className={`p-4 rounded-lg border transition-all duration-300 ${
-                      challenge.completed
+                  {todaysChallenges.length > 0 ? todaysChallenges.map((userChallenge) => (
+                    <div key={userChallenge.id} className={`p-4 rounded-lg border transition-all duration-300 ${
+                      userChallenge.is_completed
                         ? 'bg-success/10 border-success/30'
                         : 'bg-muted/30 border-border hover:bg-muted/50'
                     }`}>
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <div className="flex items-center space-x-3 mb-2">
-                            <h3 className="font-semibold text-foreground">{challenge.title}</h3>
-                            {challenge.completed && <CheckCircle className="w-5 h-5 text-success" />}
+                            <h3 className="font-semibold text-foreground">{userChallenge.challenge.title}</h3>
+                            {userChallenge.is_completed && <CheckCircle className="w-5 h-5 text-success" />}
                           </div>
-                          <p className="text-muted-foreground text-sm mb-3">{challenge.description}</p>
+                          <p className="text-muted-foreground text-sm mb-3">{userChallenge.challenge.description}</p>
                           <div className="flex items-center space-x-4 text-sm">
                             <span className="flex items-center space-x-1">
                               <Star className="w-4 h-4 text-accent" />
-                              <span>{challenge.points} points</span>
+                              <span>{userChallenge.challenge.points} points</span>
                             </span>
                             <span className="flex items-center space-x-1">
                               <Clock className="w-4 h-4 text-muted-foreground" />
-                              <span>{challenge.time}</span>
+                              <span>{userChallenge.challenge.estimated_time}</span>
                             </span>
                             <span className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">
-                              {challenge.category}
+                              {userChallenge.challenge.category}
                             </span>
                           </div>
                         </div>
-                        {!challenge.completed && (
-                          <Button size="sm" className="eco-button">
-                            Start
+                        {!userChallenge.is_completed && (
+                          <Button 
+                            size="sm" 
+                            className="eco-button"
+                            onClick={() => handleCompleteChallenge(userChallenge.id, userChallenge)}
+                          >
+                            Complete
                           </Button>
                         )}
                       </div>
                     </div>
-                  ))}
+                  )) : (
+                    <div className="text-center py-8 text-muted-foreground">
+                      <Target className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                      <p className="text-lg mb-2">No challenges started today</p>
+                      <p className="text-sm">Visit the Challenges page to start some!</p>
+                      <Button 
+                        className="mt-4 eco-button" 
+                        onClick={() => navigate("/challenges/browse")}
+                      >
+                        Browse Challenges
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </div>
 
               {/* Weekly Progress */}
               <div className="eco-card">
-                <h2 className="text-2xl font-heading font-bold text-foreground mb-6">Weekly Progress</h2>
+                <h2 className="text-2xl font-heading font-bold text-foreground mb-6">Recent Activity</h2>
                 <div className="space-y-3">
-                  {weeklyProgress.map((day) => (
-                    <div key={day.day} className="flex items-center justify-between p-3 rounded-lg bg-muted/30">
-                      <div className="font-medium text-foreground">{day.day}</div>
+                  {recentChallenges.length > 0 ? recentChallenges.map((userChallenge) => (
+                    <div key={userChallenge.id} className="flex items-center justify-between p-3 rounded-lg bg-success/10 border border-success/30">
+                      <div className="font-medium text-foreground">{userChallenge.challenge.title}</div>
                       <div className="flex items-center space-x-4">
                         <div className="text-sm text-muted-foreground">
-                          {day.challenges} challenges
+                          {userChallenge.challenge.category}
                         </div>
-                        <div className="text-sm font-bold text-primary">
-                          {day.points} pts
+                        <div className="text-sm font-bold text-success">
+                          +{userChallenge.challenge.points} pts
                         </div>
                       </div>
                     </div>
-                  ))}
+                  )) : (
+                    <div className="text-center py-8 text-muted-foreground">
+                      <Calendar className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                      <p>No completed challenges yet</p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -229,8 +214,8 @@ const Dashboard = () => {
               <div className="eco-card mb-8">
                 <h2 className="text-2xl font-heading font-bold text-foreground mb-6">Achievements</h2>
                 <div className="space-y-4">
-                  {achievements.map((achievement, index) => (
-                    <div key={index} className={`flex items-center space-x-3 p-3 rounded-lg transition-all duration-300 ${
+                  {achievementsWithStatus.map((achievement) => (
+                    <div key={achievement.id} className={`flex items-center space-x-3 p-3 rounded-lg transition-all duration-300 ${
                       achievement.unlocked
                         ? 'bg-success/10 border border-success/30'
                         : 'bg-muted/30 opacity-60'
@@ -252,13 +237,22 @@ const Dashboard = () => {
               <div className="eco-card">
                 <h2 className="text-xl font-heading font-bold text-foreground mb-4">Quick Actions</h2>
                 <div className="space-y-3">
-                  <Button className="w-full eco-button justify-start" variant="outline">
+                  <Button 
+                    className="w-full eco-button justify-start" 
+                    variant="outline"
+                    onClick={() => navigate("/challenges/browse")}
+                  >
                     <Target className="w-4 h-4 mr-2" />
                     Browse Challenges
                   </Button>
-                  <Button className="w-full eco-button justify-start" variant="outline">
+                  <Button 
+                    className="w-full eco-button justify-start" 
+                    variant="outline"
+                    onClick={handlePlantTree}
+                    disabled={profile.total_points < 100}
+                  >
                     <TreePine className="w-4 h-4 mr-2" />
-                    Plant a Tree
+                    Plant a Tree (100 pts)
                   </Button>
                   <Button className="w-full eco-button justify-start" variant="outline">
                     <Trophy className="w-4 h-4 mr-2" />
