@@ -14,7 +14,184 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      achievements: {
+        Row: {
+          created_at: string | null
+          description: string
+          icon: string
+          id: string
+          name: string
+          points_reward: number | null
+          requirement_type: string
+          requirement_value: number
+        }
+        Insert: {
+          created_at?: string | null
+          description: string
+          icon: string
+          id?: string
+          name: string
+          points_reward?: number | null
+          requirement_type: string
+          requirement_value: number
+        }
+        Update: {
+          created_at?: string | null
+          description?: string
+          icon?: string
+          id?: string
+          name?: string
+          points_reward?: number | null
+          requirement_type?: string
+          requirement_value?: number
+        }
+        Relationships: []
+      }
+      challenges: {
+        Row: {
+          category: string
+          co2_impact_kg: number | null
+          created_at: string | null
+          description: string
+          difficulty: string
+          estimated_time: string
+          id: string
+          is_active: boolean | null
+          points: number
+          title: string
+        }
+        Insert: {
+          category: string
+          co2_impact_kg?: number | null
+          created_at?: string | null
+          description: string
+          difficulty?: string
+          estimated_time: string
+          id?: string
+          is_active?: boolean | null
+          points: number
+          title: string
+        }
+        Update: {
+          category?: string
+          co2_impact_kg?: number | null
+          created_at?: string | null
+          description?: string
+          difficulty?: string
+          estimated_time?: string
+          id?: string
+          is_active?: boolean | null
+          points?: number
+          title?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          co2_saved_kg: number | null
+          created_at: string | null
+          current_streak: number | null
+          full_name: string | null
+          id: string
+          level: number | null
+          longest_streak: number | null
+          total_points: number | null
+          trees_planted: number | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          co2_saved_kg?: number | null
+          created_at?: string | null
+          current_streak?: number | null
+          full_name?: string | null
+          id?: string
+          level?: number | null
+          longest_streak?: number | null
+          total_points?: number | null
+          trees_planted?: number | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          co2_saved_kg?: number | null
+          created_at?: string | null
+          current_streak?: number | null
+          full_name?: string | null
+          id?: string
+          level?: number | null
+          longest_streak?: number | null
+          total_points?: number | null
+          trees_planted?: number | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_achievements: {
+        Row: {
+          achievement_id: string
+          id: string
+          unlocked_at: string | null
+          user_id: string
+        }
+        Insert: {
+          achievement_id: string
+          id?: string
+          unlocked_at?: string | null
+          user_id: string
+        }
+        Update: {
+          achievement_id?: string
+          id?: string
+          unlocked_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_achievements_achievement_id_fkey"
+            columns: ["achievement_id"]
+            isOneToOne: false
+            referencedRelation: "achievements"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_challenges: {
+        Row: {
+          challenge_id: string
+          completed_at: string | null
+          id: string
+          is_completed: boolean | null
+          started_at: string | null
+          user_id: string
+        }
+        Insert: {
+          challenge_id: string
+          completed_at?: string | null
+          id?: string
+          is_completed?: boolean | null
+          started_at?: string | null
+          user_id: string
+        }
+        Update: {
+          challenge_id?: string
+          completed_at?: string | null
+          id?: string
+          is_completed?: boolean | null
+          started_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_challenges_challenge_id_fkey"
+            columns: ["challenge_id"]
+            isOneToOne: false
+            referencedRelation: "challenges"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
